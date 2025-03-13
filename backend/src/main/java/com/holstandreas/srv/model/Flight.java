@@ -1,16 +1,22 @@
 package com.holstandreas.srv.model;
 
-import java.time.LocalDate;
-import java.time.LocalTime;
+import java.time.LocalDateTime;
 
+import com.holstandreas.srv.model.enums.AircraftSize;
+
+import jakarta.persistence.Entity;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
+import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotNull;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+@Entity
 @Data
 @NoArgsConstructor
 @Table(name = "flights")
@@ -21,30 +27,26 @@ public class Flight {
   private Long id;
 
   @NotNull
-  private String depAirport;
+  private String departureAirport;
 
   @NotNull
-  private LocalDate depDate;
+  private LocalDateTime departureTime;
 
   @NotNull
-  private LocalTime depTime;
+  private String arrivalAirport;
 
   @NotNull
-  private String arrAirport;
-
-  @NotNull
-  private LocalDate arrDate;
-
-  @NotNull
-  private LocalTime arrTime;
+  private LocalDateTime arrivalTime;
 
   @NotNull
   private Integer duration;
 
   @NotNull
-  private String aircraft;
+  @Enumerated(EnumType.STRING)
+  private AircraftSize aircraftSize;
 
   @NotNull
-  private Double price;
+  @Min(0)
+  private Double startingPrice;
 
 }
