@@ -1,8 +1,11 @@
 export type Flight = {
+  flightId: string,
   departureAirport: string,
-  departureTime: number,
+  departureDate: string,
+  departureTime: string,
   arrivalAirport: string,
-  arrivalTime: number,
-  duration: number,
+  arrivalDate: string,
+  arrivalTime: string,
+  duration: string,
   startingPrice: number,
 }

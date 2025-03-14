@@ -21,11 +21,38 @@ const FlightSection = () => {
     setIsLoading(false);
   }, []);
 
+  const handleFlightSelection = async (flightId: string) => {
+    try {
+      // add real fetch here later
+      console.log("Flight has been selected " + flightId)
+    } catch (error) {
+      console.error("Failure...")
+    }
+  };
+
+  // const flights: Flight[] = [
+  //   {
+  //     flightId: "EE120",
+  //     departureAirport: "Tallinn, Estonia (TLL)",
+  //     departureDate: "20.03.2025",
+  //     departureTime: "10:00",
+  //     arrivalAirport: "Riga, Latvia (RGX)",
+  //     arrivalDate: "20.03.2025",
+  //     arrivalTime: "12:00",
+  //     duration: "2h35min",
+  //     startingPrice: 10,
+  //   }
+  // ]
+
   return (
-    <div>
+    <div className="bg-white">
       {flights.map((flight: Flight) => (
 
-        <FlightElement flight={flight}/>
+        <FlightElement 
+          key={flight.flightId}
+          flight={flight}
+          onClick={() => handleFlightSelection(flight.flightId)}
+        />
       ))};
     </div>
   )
