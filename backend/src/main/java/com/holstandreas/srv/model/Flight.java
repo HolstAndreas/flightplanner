@@ -10,6 +10,8 @@ import jakarta.persistence.Enumerated;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotNull;
@@ -27,13 +29,17 @@ public class Flight {
   private Long id;
 
   @NotNull
-  private String departureAirport;
+  @ManyToOne
+  @JoinColumn(name = "departure_airport_id")
+  private Airport departureAirport;
 
   @NotNull
   private LocalDateTime departureTime;
 
   @NotNull
-  private String arrivalAirport;
+  @ManyToOne
+  @JoinColumn(name = "arrival_airport_id")
+  private Airport arrivalAirport;
 
   @NotNull
   private LocalDateTime arrivalTime;
