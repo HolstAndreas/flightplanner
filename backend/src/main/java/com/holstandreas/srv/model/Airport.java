@@ -38,6 +38,9 @@ public class Airport {
   @NotNull
   private Double latitude;
 
+  @NotNull
+  private Integer timezone;
+
   @OneToMany(mappedBy = "departureAirport")
   private List<Flight> departureFlights;
 
