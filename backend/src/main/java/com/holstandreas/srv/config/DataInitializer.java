@@ -67,7 +67,7 @@ public class DataInitializer {
       newFlight.setArrivalAirport(arrivalAirport);
 
       LocalDate start = LocalDate.now().plusDays(1 + random.nextInt(PLANNED_DAYS));
-      LocalDateTime departureTime = start.atTime(random.nextInt(24), random.nextInt(11) * 5);
+      LocalDateTime departureTime = start.atTime(random.nextInt(24), random.nextInt(12) * 5);
 
       newFlight.setDepartureTime(departureTime);
 
@@ -76,8 +76,8 @@ public class DataInitializer {
 
       newFlight.setDuration(duration);
 
-      LocalDateTime arrivalTime = departureTime.plusHours(Math.round(duration))
-          .plusMinutes((long) (duration - Math.round(duration)) * 6);
+      LocalDateTime arrivalTime = departureTime.plusHours((long) Math.floor(duration))
+          .plusMinutes((long) ((duration - Math.floor(duration)) * 60));
 
       newFlight.setArrivalTime(arrivalTime);
 
