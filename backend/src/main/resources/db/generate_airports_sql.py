@@ -26,7 +26,7 @@ def generate_sql_from_csv():
                 country = row['Country'].replace("'", "''")
                 
                 # Create the INSERT statement using triple quotes
-                sql = f'''INSERT INTO airport (city, airport, iataCode, country, longitude, latitude, timezone) 
+                sql = f'''INSERT INTO airport (city, airport, iata_code, country, longitude, latitude, timezone) 
 VALUES ('{city}', '{airport}', '{row['Code']}', '{country}', {row['longitude'] or 'NULL'}, {row['latitude'] or 'NULL'}, {row['timezone']});
 '''
                 
