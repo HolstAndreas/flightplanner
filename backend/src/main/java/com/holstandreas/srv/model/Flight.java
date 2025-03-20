@@ -53,6 +53,6 @@ public class Flight {
 
   @NotNull
   @Min(0)
-  private Double startingPrice;
+  private Integer startingPrice;
 
 }
