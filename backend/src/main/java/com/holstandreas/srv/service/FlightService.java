@@ -4,6 +4,8 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import com.holstandreas.srv.dto.FlightDTO;
@@ -19,17 +21,17 @@ public class FlightService {
 
   private final FlightRepository flightRepository;
 
-  public List<FlightDTO> getFlights() {
+  public List<FlightDTO> getFlights(Pageable pageRequest) {
 
-    List<Flight> allFlights = flightRepository.findAll();
+    Page<Flight> allFlights = flightRepository.findAll(pageRequest);
 
-    return transformList(allFlights);
+    return transformPage(allFlights);
   }
 
-  private List<FlightDTO> transformList(List<Flight> allFlights) {
+  private List<FlightDTO> transformPage(Page<Flight> allFlights) {
     List<FlightDTO> flights = new ArrayList<>();
 
-    for (Flight flight : allFlights) {
+    for (Flight flight : allFlights.getContent()) {
       FlightDTO newFlight = new FlightDTO();
 
       newFlight.setFlightId(flight.getId());
