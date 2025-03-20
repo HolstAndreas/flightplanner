@@ -85,13 +85,13 @@ public class DataInitializer {
       Integer size = random.nextInt(10);
       if (size < 4) {
         newFlight.setAircraftSize(AircraftSize.M);
-        newFlight.setStartingPrice((distance * 8 * 0.7) / 100 / 0.3);
+        newFlight.setStartingPrice((int) Math.ceil(((distance * 8 * 0.7) / 100 / 0.3)));
       } else if (size < 8) {
         newFlight.setAircraftSize(AircraftSize.L);
-        newFlight.setStartingPrice((distance * 12 * 0.7) / 150 / 0.3);
+        newFlight.setStartingPrice((int) Math.ceil((distance * 12 * 0.7) / 150 / 0.3));
       } else {
         newFlight.setAircraftSize(AircraftSize.XL);
-        newFlight.setStartingPrice((distance * 15 * 0.7) / 200 / 0.3);
+        newFlight.setStartingPrice((int) Math.ceil((distance * 15 * 0.7) / 200 / 0.3));
       }
 
       flightRepository.save(newFlight);
