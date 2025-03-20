@@ -1,17 +1,19 @@
 import { useEffect, useState } from "react"
 import FlightElement from "./FlightElement"
-import { fetchAllFlights } from "../service/flight-service";
+import { fetchFlights } from "../service/flight-service";
 import { Flight } from "../types";
+import SortingElement from "./ui/SortingElement";
 
 const FlightSection = () => {
   const [flights, setFlights] = useState<Flight[]>([]);
   const [isLoading, setIsLoading] = useState(true);
+  const [currentSort, setCurrentSort] = useState('date_asc')
 
   useEffect(() => {
     const loadFlights = async () => {    
       try {
-        const data = await fetchAllFlights();
-        setFlights(data);
+        const allFlights = await fetchFlights();
+        setFlights(allFlights);
       } catch (error) {
         console.error('Failed to fetch flights: ', error);
       }
@@ -30,30 +32,27 @@ const FlightSection = () => {
     }
   };
 
-  // const flights: Flight[] = [
-  //   {
-  //     flightId: "EE120",
-  //     departureAirport: "Tallinn, Estonia (TLL)",
-  //     departureDate: "20.03.2025",
-  //     departureTime: "10:00",
-  //     arrivalAirport: "Riga, Latvia (RGX)",
-  //     arrivalDate: "20.03.2025",
-  //     arrivalTime: "12:00",
-  //     duration: "2h35min",
-  //     startingPrice: 10,
-  //   }
-  // ]
+  const handleSortChange = (sortBy: string) => {
+    console.log("Sort changed to: " + sortBy);
+    setCurrentSort(sortBy);
+  }
 
   return (
-    <div className="bg-white">
-      {flights.map((flight: Flight) => (
+    <div>
+      <SortingElement 
+        onSortChange={handleSortChange}
+        currentSort={currentSort}
+      />
+      <div className="bg-white">
+        {flights.map((flight: Flight) => (
 
-        <FlightElement 
-          key={flight.flightId}
-          flight={flight}
-          onClick={() => handleFlightSelection(flight.flightId)}
-        />
-      ))};
+          <FlightElement 
+            key={flight.flightId}
+            flight={flight}
+            onClick={() => handleFlightSelection(flight.flightId)}
+          />
+        ))};
+      </div>
     </div>
   )
 }
