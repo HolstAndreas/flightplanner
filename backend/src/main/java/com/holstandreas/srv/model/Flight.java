@@ -45,7 +45,7 @@ public class Flight {
   private LocalDateTime arrivalTime;
 
   @NotNull
-  private Integer duration;
+  private Double duration;
 
   @NotNull
   @Enumerated(EnumType.STRING)
