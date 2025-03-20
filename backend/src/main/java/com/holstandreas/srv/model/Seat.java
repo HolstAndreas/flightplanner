@@ -23,9 +23,9 @@ public class Seat {
   @Enumerated
   private AircraftSize aircraftSize;
 
-  private Integer row;
+  private Integer seatRow;
 
-  private String column;
+  private String seatColumn;
 
   @Enumerated
   private TravelClass travelClass;

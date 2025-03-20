@@ -27,6 +27,7 @@ public class DataInitializer {
   private static final int PLANNED_DAYS = 200;
   private static final int EARTH_RADIUS_KM = 6371;
   private static final int AVG_FLIGHT_SPEED = 800;
+  private static final int DATABASE_SIZE = 100;
 
   private final AirportRepository airportRepository;
   private final FlightRepository flightRepository;
@@ -52,7 +53,7 @@ public class DataInitializer {
 
     Random random = new Random();
 
-    for (int i = 0; i <= 1000; i++) {
+    for (int i = 0; i <= DATABASE_SIZE; i++) {
       Flight newFlight = new Flight();
 
       Airport departureAirport = airports.get(random.nextInt(airports.size()));
@@ -103,8 +104,8 @@ public class DataInitializer {
     for (int i = 1; i <= 30; i++) {
       for (int j = 65; j <= 70; j++) {
         Seat newSeat = new Seat();
-        newSeat.setRow(i);
-        newSeat.setColumn(String.valueOf((char) j));
+        newSeat.setSeatRow(i);
+        newSeat.setSeatColumn(String.valueOf((char) j));
         newSeat.setAircraftSize(AircraftSize.M);
 
         if (i < 8) {
@@ -139,8 +140,8 @@ public class DataInitializer {
     for (int i = 1; i <= 42; i++) {
       for (int j = 65; j <= 73; j++) {
         Seat newSeat = new Seat();
-        newSeat.setRow(i);
-        newSeat.setColumn(String.valueOf((char) j));
+        newSeat.setSeatRow(i);
+        newSeat.setSeatColumn(String.valueOf((char) j));
         newSeat.setAircraftSize(AircraftSize.L);
 
         if (i < 9) {
@@ -177,8 +178,8 @@ public class DataInitializer {
     for (int i = 1; i <= 60; i++) {
       for (int j = 65; j <= 73; j++) {
         Seat newSeat = new Seat();
-        newSeat.setRow(i);
-        newSeat.setColumn(String.valueOf((char) j));
+        newSeat.setSeatRow(i);
+        newSeat.setSeatColumn(String.valueOf((char) j));
         newSeat.setAircraftSize(AircraftSize.XL);
 
         if (i < 9) {
