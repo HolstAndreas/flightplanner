@@ -77,6 +77,9 @@ public class FlightService {
   }
 
   private String durationToString(Double duration) {
-    return (int) Math.floor(duration) + "h" + ((int) (duration - Math.floor(duration)) * 60) + "min";
+    String hour = duration < 1 ? "" : (int) Math.floor(duration) + "h";
+    String minute = duration - Math.floor(duration) > 0 ? ((int) ((duration - Math.floor(duration)) * 60)) + "min" : "";
+
+    return hour + minute;
   }
 }
