@@ -13,7 +13,7 @@ const FlightSection = () => {
     const loadFlights = async () => {    
       try {
         const allFlights = await fetchFlights();
-        setFlights(allFlights);
+        setFlights(allFlights.flightList);
       } catch (error) {
         console.error('Failed to fetch flights: ', error);
       }

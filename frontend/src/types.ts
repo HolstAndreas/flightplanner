@@ -17,7 +17,7 @@ export type Flight = {
 }
 
 export type FlightResponse = {
-  flights: Flight[],
+  flightList: Flight[],
   currentPageNr: number,
   pageSize: number,
   totalElements: number,
