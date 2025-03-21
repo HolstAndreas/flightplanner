@@ -14,6 +14,6 @@ public class FlightFilterDTO {
   private String arrivalCity;
   private String startingDate;
   private String endingDate;
-  private String duration;
+  private Double duration;
   private Integer maxPrice;
 }
