@@ -18,16 +18,16 @@ public interface FlightRepository extends JpaRepository<Flight, Long> {
       SELECT DISTINCT f FROM Flight f
       JOIN f.departureAirport dep
       JOIN f.arrivalAirport arr
-      WHERE (:departureAirport is NULL OR dep.iataCode = :departureAirport)
-      AND (:departureCountry IS NULL OR dep.country = :departureCountry)
-      AND (:departureCity IS NULL OR dep.city = :departureCity)
-      AND (:arrivalAirport IS NULL OR arr.iataCode = :arrivalAirport)
-      AND (:arrivalCountry IS NULL OR arr.country = :arrivalCountry)
-      AND (:arrivalCity IS NULL OR arr.city = :arrivalCity)
-      AND (:startingDate IS NULL OR f.departureTime >= :startingDate)
-      AND (:endingDate IS NULL OR f.departureTime <= :endingDate)
-      AND (:maxDuration IS NULL OR f.duration <= :duration)
-      AND (:maxPrice IS NULL OR f.startingPrice <= :maxPrice)
+      WHERE (cast(:departureAirport as string) is NULL OR dep.iataCode = :departureAirport)
+      AND (cast(:departureCountry as string) IS NULL OR dep.country = :departureCountry)
+      AND (cast(:departureCity as string) IS NULL OR dep.city = :departureCity)
+      AND (cast(:arrivalAirport as string) IS NULL OR arr.iataCode = :arrivalAirport)
+      AND (cast(:arrivalCountry as string) IS NULL OR arr.country = :arrivalCountry)
+      AND (cast(:arrivalCity as string) IS NULL OR arr.city = :arrivalCity)
+      AND (cast(:startingDate as timestamp) IS NULL OR f.departureTime >= :startingDate)
+      AND (cast(:endingDate as timestamp) IS NULL OR f.departureTime <= :endingDate)
+      AND (cast(:duration as double) IS NULL OR f.duration <= :duration)
+      AND (cast(:maxPrice as integer) IS NULL OR f.startingPrice <= :maxPrice)
       """)
   Page<Flight> findWithFilters(
       @Param("departureAirport") String departureAirport,
@@ -38,7 +38,7 @@ public interface FlightRepository extends JpaRepository<Flight, Long> {
       @Param("arrivalCity") String arrivalCity,
       @Param("startingDate") LocalDateTime startingDate,
       @Param("endingDate") LocalDateTime endingDate,
-      @Param("maxDuration") Double maxDuration,
+      @Param("duration") Double duration,
       @Param("maxPrice") Integer maxPrice,
       Pageable pageable);
 }
