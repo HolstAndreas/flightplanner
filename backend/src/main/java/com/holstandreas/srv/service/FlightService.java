@@ -1,6 +1,8 @@
 package com.holstandreas.srv.service;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -10,6 +12,7 @@ import org.springframework.stereotype.Service;
 
 import com.holstandreas.srv.dto.FlightDTO;
 import com.holstandreas.srv.dto.FlightFilterDTO;
+import com.holstandreas.srv.dto.FlightResponseDTO;
 import com.holstandreas.srv.model.Airport;
 import com.holstandreas.srv.model.Flight;
 import com.holstandreas.srv.repository.FlightRepository;
@@ -22,17 +25,33 @@ public class FlightService {
 
   private final FlightRepository flightRepository;
 
-  public List<FlightDTO> getFlights(Pageable pageRequest, FlightFilterDTO filters) {
+  public FlightResponseDTO getFlights(Pageable pageRequest, FlightFilterDTO filters) {
 
-    Page<Flight> allFlights = flightRepository.findAll(pageRequest);
+    Page<Flight> page = flightRepository.findWithFilters(
+        filters.getDepartureAirport(),
+        filters.getDepartureCountry(),
+        filters.getDepartureCity(),
+        filters.getArrivalAirport(),
+        filters.getArrivalCountry(),
+        filters.getArrivalCity(),
+        stringToDateTime(filters.getStartingDate()),
+        stringToDateTime(filters.getEndingDate()),
+        filters.getDuration(),
+        filters.getMaxPrice(),
+        pageRequest);
 
-    return transformPage(allFlights);
+    return new FlightResponseDTO(
+        transformPage(page.getContent()),
+        page.getNumber(),
+        page.getSize(),
+        page.getTotalElements(),
+        page.getTotalPages());
   }
 
-  private List<FlightDTO> transformPage(Page<Flight> allFlights) {
+  private List<FlightDTO> transformPage(List<Flight> allFlights) {
     List<FlightDTO> flights = new ArrayList<>();
 
-    for (Flight flight : allFlights.getContent()) {
+    for (Flight flight : allFlights) {
       FlightDTO newFlight = new FlightDTO();
 
       newFlight.setFlightId(flight.getId());
@@ -84,5 +103,12 @@ public class FlightService {
     String minute = duration - Math.floor(duration) > 0 ? ((int) ((duration - Math.floor(duration)) * 60)) + "min" : "";
 
     return hour + minute;
+  }
+
+  private LocalDateTime stringToDateTime(String date) {
+    if (date == null) {
+      return null;
+    }
+    return LocalDate.parse(date, DateTimeFormatter.ISO_DATE).atStartOfDay();
   }
 }
