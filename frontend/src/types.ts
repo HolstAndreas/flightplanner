@@ -23,3 +23,14 @@ export type FlightResponse = {
   totalElements: number,
   totalPages: number
 }
+
+export type Airport = {
+  name: string,
+  iataCode: string,
+}
+
+export type LocationResponse = {
+  cities: string[],
+  countries: string[],
+  airports: Airport[],
+}
