@@ -9,6 +9,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import com.holstandreas.srv.dto.FlightDTO;
+import com.holstandreas.srv.dto.FlightFilterDTO;
 import com.holstandreas.srv.model.Airport;
 import com.holstandreas.srv.model.Flight;
 import com.holstandreas.srv.repository.FlightRepository;
@@ -21,7 +22,7 @@ public class FlightService {
 
   private final FlightRepository flightRepository;
 
-  public List<FlightDTO> getFlights(Pageable pageRequest) {
+  public List<FlightDTO> getFlights(Pageable pageRequest, String sort, FlightFilterDTO filters) {
 
     Page<Flight> allFlights = flightRepository.findAll(pageRequest);
 
