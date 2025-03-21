@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -27,7 +28,8 @@ public class FlightController {
   public ResponseEntity<List<FlightDTO>> getFlights(
       @RequestParam(required = false, defaultValue = "0") Integer page,
       @RequestParam(required = false, defaultValue = "10") Integer size,
-      @RequestParam(required = false, defaultValue = "date_asc") String sort,
+      @RequestParam(required = false, defaultValue = "departureTime") String sortColumn,
+      @RequestParam(required = false, defaultValue = "ASC") String sortDirection,
       @RequestParam(required = false) String departureAirport,
       @RequestParam(required = false) String departureCountry,
       @RequestParam(required = false) String departureCity,
@@ -39,10 +41,13 @@ public class FlightController {
       @RequestParam(required = false) String duration,
       @RequestParam(required = false) Integer maxPrice) {
 
-    Pageable pageRequest = PageRequest.of(page, size);
+    Sort sort = Sort.by(Sort.Direction.valueOf(sortDirection), sortColumn);
+    Pageable pageRequest = PageRequest.of(page, size, sort);
+
     FlightFilterDTO filters = new FlightFilterDTO(departureAirport, departureCountry, departureCity, arrivalAirport,
         arrivalCountry, arrivalCity, startingDate, endingDate, duration, maxPrice);
-    List<FlightDTO> response = flightService.getFlights(pageRequest, sort, filters);
+
+    List<FlightDTO> response = flightService.getFlights(pageRequest, filters);
 
     return ResponseEntity.ok(response);
   }

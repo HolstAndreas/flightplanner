@@ -22,7 +22,7 @@ public class FlightService {
 
   private final FlightRepository flightRepository;
 
-  public List<FlightDTO> getFlights(Pageable pageRequest, String sort, FlightFilterDTO filters) {
+  public List<FlightDTO> getFlights(Pageable pageRequest, FlightFilterDTO filters) {
 
     Page<Flight> allFlights = flightRepository.findAll(pageRequest);
 
