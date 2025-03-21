@@ -15,3 +15,11 @@ export type Flight = {
   duration: string,
   startingPrice: number,
 }
+
+export type FlightResponse = {
+  flights: Flight[],
+  currentPageNr: number,
+  pageSize: number,
+  totalElements: number,
+  totalPages: number
+}
