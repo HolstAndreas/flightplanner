@@ -56,7 +56,7 @@ export const fetchSeats = async (flightId: string): Promise<SeatsResponse[]> => 
       headers: {
         'Content-Type': 'application/json',
       },
-      params: flightId
+      params: { flightId }
     });
 
     return response.data
