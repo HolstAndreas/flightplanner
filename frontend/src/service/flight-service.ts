@@ -1,5 +1,5 @@
 import axios from "axios";
-import { FlightResponse, LocationResponse } from "../types";
+import { FlightResponse, LocationResponse, SeatsResponse } from "../types";
 
 const API_URL = '/api';
 
@@ -50,12 +50,13 @@ export const fetchLocations = async (): Promise<LocationResponse> => {
   }
 }
 
-export const fetchSeats = async (): Promise<SeatsResponse> => {
+export const fetchSeats = async (flightId: string): Promise<SeatsResponse[]> => {
   try {
     const response = await axios.get(`${API_URL}/seats`, {
       headers: {
         'Content-Type': 'application/json',
-      }
+      },
+      params: flightId
     });
 
     return response.data
