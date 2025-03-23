@@ -17,6 +17,7 @@ import com.holstandreas.srv.model.Airport;
 import com.holstandreas.srv.model.Flight;
 import com.holstandreas.srv.repository.FlightRepository;
 
+import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
 
 @Service
@@ -46,6 +47,11 @@ public class FlightService {
         page.getSize(),
         page.getTotalElements(),
         page.getTotalPages());
+  }
+
+  public Flight getFlightById(Long flightId) {
+    return flightRepository.findById(flightId)
+        .orElseThrow(() -> new EntityNotFoundException("Flight not found with id: " + flightId));
   }
 
   private List<FlightDTO> transformPage(List<Flight> allFlights) {
