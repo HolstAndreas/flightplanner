@@ -229,7 +229,7 @@ const FlightsFilter = ({ onFiltersChange, onRecommendationsChange, seatPreferenc
                   max="20"
                   value={filters.duration || "20"}
                   step="1"
-                  label={`Maximum duration: ${filters.duration || 5} hours`}
+                  label={`Maximum duration (h)`}
                   onChange={handleSliderChange}
                 />
                 <SliderElement
@@ -239,7 +239,7 @@ const FlightsFilter = ({ onFiltersChange, onRecommendationsChange, seatPreferenc
                   max="2000"
                   value={filters.maxPrice || "2000"}
                   step="100"
-                  label={`Maximum Price: €${filters.maxPrice || 2000}`}
+                  label={`Maximum Price (€)`}
                   onChange={handleSliderChange}
                 />
                 <SortingElement 
@@ -248,28 +248,8 @@ const FlightsFilter = ({ onFiltersChange, onRecommendationsChange, seatPreferenc
                 />
               </div>
 
-            </div>
-          
-            <div className="flex-1">
-              <div className="transform scale-75 origin-top-right">
-              {/* <h3 className="font-medium mb-2 border-b pb-1">Date Range</h3> */}
-                <DayPicker 
-                  ISOWeek
-                  captionLayout="dropdown"
-                  hideWeekdays={true}
-                  mode="range"
-                  selected={selectedDateRange}
-                  onSelect={setSelectedDateRange}
-                  startMonth={new Date()}
-                  endMonth={new Date(2026, 12)}
-                />
-              </div>
-              
-            </div>
-          </div>
-
-          <div className="flex flex-wrap">
-          <div className="flex mt-4 gap-2 mr-50">
+              <div className="flex flex-wrap">
+          <div className="flex mt-4 gap-2 mr-30 items-center">
             <button
               type="submit"
               className="px-4 py-2 bg-blue-500 hover:bg-blue-600 text-white rounded shadow-sm"
@@ -285,7 +265,7 @@ const FlightsFilter = ({ onFiltersChange, onRecommendationsChange, seatPreferenc
             </button>
           </div>
 
-          <div className="flex flex-row gap-10 items-center">
+          <div className="flex flex-row gap-10 items-center mt-4">
             <h3 className="font-semibold text-lg pb-1">Seat recommendations</h3>
           <div>
             <CheckboxElement
@@ -326,6 +306,25 @@ const FlightsFilter = ({ onFiltersChange, onRecommendationsChange, seatPreferenc
               />
             </div>
           </div>
+          </div>
+            </div>
+          
+            <div className="flex-1">
+              <div className="transform scale-75 origin-top-right">
+              <h3 className="text-xl font-semibold mb-2 border-b pb-1">Flights between</h3>
+                <DayPicker 
+                  ISOWeek
+                  captionLayout="dropdown"
+                  hideWeekdays={true}
+                  mode="range"
+                  selected={selectedDateRange}
+                  onSelect={setSelectedDateRange}
+                  startMonth={new Date()}
+                  endMonth={new Date(2026, 12)}
+                />
+              </div>
+              
+            </div>
           </div>
         </div>
       </form>
