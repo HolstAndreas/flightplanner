@@ -13,6 +13,6 @@ public class SeatResponseDTO {
   private boolean hasWindow;
   private boolean hasLegSpace;
   private boolean hasExit;
-  private boolean istaken;
+  private boolean isTaken;
   private Integer price;
 }
