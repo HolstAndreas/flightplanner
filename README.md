@@ -30,9 +30,10 @@ cd flightplanner
 ```
 
 ```bash
-psql -U postgres
-CREATE DATABASE flights OWNER;
+psql -U *YOUR USERNAME*
+CREATE DATABASE flights;
 ```
+Navigate to `application.properties` and insert your username and your password to `spring.datasource.*` properties
 
 ```bash
 cd backend
