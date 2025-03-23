@@ -31,8 +31,7 @@ cd flightplanner
 
 ```bash
 psql -U postgres
-Create USER kasutaja WITH PASSWORD 'koodjohvi';
-CREATE DATABASE flights OWNER kasutaja;
+CREATE DATABASE flights OWNER;
 ```
 
 ```bash
