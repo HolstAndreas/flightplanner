@@ -45,7 +45,22 @@ export const fetchLocations = async (): Promise<LocationResponse> => {
 
     return response.data;
   } catch (error) {
-    console.error('Failed to fetch location filters ', error);
+    console.error('Failed to fetch location filters: ', error);
+    throw error;
+  }
+}
+
+export const fetchSeats = async (): Promise<SeatsResponse> => {
+  try {
+    const response = await axios.get(`${API_URL}/seats`, {
+      headers: {
+        'Content-Type': 'application/json',
+      }
+    });
+
+    return response.data
+  } catch (error) {
+    console.error('Failed to fetch seats: ', error);
     throw error;
   }
 }
