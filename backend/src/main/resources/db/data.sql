@@ -50,8 +50,6 @@ VALUES ('Lyon', 'Saint-Exupéry Airport', 'LYS', 'France', 5.081111, 45.725556, 
 INSERT INTO airport (city, airport, iata_code, country, longitude, latitude, timezone) 
 VALUES ('Marseille', 'Provence Airport', 'MRS', 'France', 5.22142410278, 43.439271922, 1);
 INSERT INTO airport (city, airport, iata_code, country, longitude, latitude, timezone) 
-VALUES ('Mulhouse', 'Basel-Mulhouse-Freiburg Airport', 'BSL', 'France', 7.529167, 47.59, 1);
-INSERT INTO airport (city, airport, iata_code, country, longitude, latitude, timezone) 
 VALUES ('Nantes', 'Nantes Atlantique Airport', 'NTE', 'France', -1.61073005199, 47.153198242200006, 1);
 INSERT INTO airport (city, airport, iata_code, country, longitude, latitude, timezone) 
 VALUES ('Nice', 'Côte d''Azur Airport', 'NCE', 'France', 7.215869903560001, 43.6584014893, 1);
@@ -331,8 +329,6 @@ INSERT INTO airport (city, airport, iata_code, country, longitude, latitude, tim
 VALUES ('Venice', 'Venice Marco Polo Airport', 'VCE', 'Italy', 12.3519, 45.505299, 1);
 INSERT INTO airport (city, airport, iata_code, country, longitude, latitude, timezone) 
 VALUES ('Verona', 'Verona Airport', 'VRN', 'Italy', 10.8885, 45.395699, 1);
-INSERT INTO airport (city, airport, iata_code, country, longitude, latitude, timezone) 
-VALUES ('Basel-Mulhouse-Freiburg', 'EuroAirport Basel–Mulhouse–Freiburg', 'BSL', 'Switzerland', 7.529167, 47.59, 1);
 INSERT INTO airport (city, airport, iata_code, country, longitude, latitude, timezone) 
 VALUES ('Bern', 'Bern-Belp Airport', 'BRN', 'Switzerland', 7.497149944309999, 46.914100647, 1);
 INSERT INTO airport (city, airport, iata_code, country, longitude, latitude, timezone) 
