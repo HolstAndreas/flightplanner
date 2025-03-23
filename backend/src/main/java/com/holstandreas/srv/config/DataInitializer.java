@@ -27,7 +27,7 @@ public class DataInitializer {
   private static final int PLANNED_DAYS = 200;
   private static final int EARTH_RADIUS_KM = 6371;
   private static final int AVG_FLIGHT_SPEED = 800;
-  private static final int DATABASE_SIZE = 100;
+  private static final int DATABASE_SIZE = 1000;
 
   private final AirportRepository airportRepository;
   private final FlightRepository flightRepository;
@@ -85,13 +85,13 @@ public class DataInitializer {
       Integer size = random.nextInt(10);
       if (size < 4) {
         newFlight.setAircraftSize(AircraftSize.M);
-        newFlight.setStartingPrice((int) Math.ceil(((distance * 8 * 0.7) / 100 / 0.3)));
+        newFlight.setStartingPrice((int) Math.ceil(((distance * 8 * 0.7) / 150 / 0.3)));
       } else if (size < 8) {
         newFlight.setAircraftSize(AircraftSize.L);
-        newFlight.setStartingPrice((int) Math.ceil((distance * 12 * 0.7) / 150 / 0.3));
+        newFlight.setStartingPrice((int) Math.ceil((distance * 12 * 0.7) / 270 / 0.3));
       } else {
         newFlight.setAircraftSize(AircraftSize.XL);
-        newFlight.setStartingPrice((int) Math.ceil((distance * 15 * 0.7) / 200 / 0.3));
+        newFlight.setStartingPrice((int) Math.ceil((distance * 15 * 0.7) / 350 / 0.3));
       }
 
       flightRepository.save(newFlight);
