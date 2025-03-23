@@ -1,3 +1,5 @@
+
+
 interface SortingElementProps {
   onSortChange: (sortBy: string) => void;
   currentSort: string;
@@ -14,12 +16,12 @@ const SortingElement = ({ onSortChange, currentSort }: SortingElementProps) => {
         onChange={(e) => onSortChange(e.target.value)}
         className="ml-2 p-1 border rounded"
       >
-        <option value="date_asc">Closest dates</option>
-        <option value="date_desc">Latest dates</option>
-        <option value="price_asc">Lowest price</option>
-        <option value="price_desc">Highest price</option>
-        <option value="duration_asc">Shortest flight</option>
-        <option value="duration_desc">Longest flight</option>
+        <option value="departureTime_ASC">Closest dates</option>
+        <option value="departureTime_DESC">Latest dates</option>
+        <option value="startingPrice_ASC">Lowest price</option>
+        <option value="startingPrice_DESC">Highest price</option>
+        <option value="duration_ASC">Shortest flight</option>
+        <option value="duration_DESC">Longest flight</option>
       </select>
     </div>
   )

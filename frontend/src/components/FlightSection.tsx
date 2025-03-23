@@ -2,18 +2,28 @@ import { useEffect, useState } from "react"
 import FlightElement from "./FlightElement"
 import { fetchFlights } from "../service/flight-service";
 import { Flight } from "../types";
-import SortingElement from "./ui/SortingElement";
 
-const FlightSection = () => {
+interface FlightSectionProps {
+  filters: Record<string, any>
+}
+
+const FlightSection = ({ filters }: FlightSectionProps) => {
   const [flights, setFlights] = useState<Flight[]>([]);
+  const [currentPage, setCurrentPage] = useState<number>();
+  const [pageSize, setPageSize] = useState<number>();
+  const [totalElements, setTotalElements] = useState<number>();
+  const [totalPages, setTotalPages] = useState<number>();
   const [isLoading, setIsLoading] = useState(true);
-  const [currentSort, setCurrentSort] = useState('date_asc')
 
   useEffect(() => {
     const loadFlights = async () => {    
       try {
-        const allFlights = await fetchFlights();
+        const allFlights = await fetchFlights(filters);
         setFlights(allFlights.flightList);
+        setCurrentPage(allFlights.currentPageNr);
+        setPageSize(allFlights.pageSize);
+        setTotalElements(allFlights.totalElements);
+        setTotalPages(allFlights.totalPages);
       } catch (error) {
         console.error('Failed to fetch flights: ', error);
       }
@@ -21,7 +31,7 @@ const FlightSection = () => {
 
     loadFlights();
     setIsLoading(false);
-  }, []);
+  }, [filters]);
 
   const handleFlightSelection = async (flightId: string) => {
     try {
@@ -32,27 +42,27 @@ const FlightSection = () => {
     }
   };
 
-  const handleSortChange = (sortBy: string) => {
-    console.log("Sort changed to: " + sortBy);
-    setCurrentSort(sortBy);
-  }
-
   return (
     <div>
-      <SortingElement 
-        onSortChange={handleSortChange}
-        currentSort={currentSort}
-      />
-      <div className="bg-white">
-        {flights.map((flight: Flight) => (
-
-          <FlightElement 
-            key={flight.flightId}
-            flight={flight}
-            onClick={() => handleFlightSelection(flight.flightId)}
-          />
-        ))};
-      </div>
+      {isLoading ? (
+        <div className="text-center py-8">
+          <p className="text-gray-600">Loading flights...</p>
+        </div>
+      ) : flights.length > 0 ? (
+        <div className="bg-white rounded shadow">
+          {flights.map((flight: Flight) => (
+            <FlightElement 
+              key={flight.flightId}
+              flight={flight}
+              onClick={() => handleFlightSelection(flight.flightId)}
+            />
+          ))}
+        </div>
+      ) : (
+        <div className="text-center py-8">
+          <p className="text-gray-600">No flights found matching your criteria.</p>
+        </div>
+      )}
     </div>
   )
 }

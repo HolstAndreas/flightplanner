@@ -14,7 +14,7 @@ interface SelectElementProps {
 const SelectElement = ({ label, name, value, options, placeholder, onChange }: SelectElementProps) => {
   return (
     <div className="mb-2">
-      {label && <h3 className="pl-1 text-sm text-gray-600 mb-1">{label}</h3>}
+      {label && <h3 className="pl-1 text-sm font-semibold text-gray-600 mb-1">{label}</h3>}
       <select
         name={name}
         value={value}
