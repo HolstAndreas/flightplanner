@@ -48,8 +48,58 @@ const FlightSection = ({ filters, seatParameters }: FlightSectionProps) => {
     }
   };
 
+  const handlePageChange = async (newPage: number) => {
+    if (newPage < 0 || (totalPages !== undefined && newPage >= totalPages)) {
+      return;
+    }
+
+    setIsLoading(true);
+    try {
+      const paginatedFilters = {
+        ...filters,
+        page: newPage
+      };
+
+      const allFlights = await fetchFlights(paginatedFilters);
+      setFlights(allFlights.flightList);
+      setCurrentPage(allFlights.currentPageNr);
+      setPageSize(allFlights.pageSize);
+      setTotalElements(allFlights.totalElements);
+      setTotalPages(allFlights.totalPages);
+    } catch (error) {
+      console.error('Failed to fetch flights for page: ', error)
+    } finally {
+      setIsLoading(false);
+    }
+  }
+
   return (
     <>
+      <div className="flex justify-between px-2 py-1 items-center bg-gray-100 rounded-t border-b">
+        <div className="text-sm text-gray-600">
+          <span className="font-medium">Size:</span> {pageSize} per page
+        </div>
+        <div className="flex items-center gap-4 text-sm text-gray-600">
+          <button 
+            onClick={() => handlePageChange((currentPage || 0) - 1)}
+            disabled={currentPage === 0 || isLoading}
+            className={`px-2 py-1 rounded ${currentPage === 0 ? 'text-gray-400 cursor-not-allowed' : 'text-blue-600 hover:bg-blue-50'}`}
+          >
+            ← Prev
+          </button>
+          <span className="font-medium">Page:</span> {currentPage !== undefined ? currentPage + 1 : '-'} of {totalPages}
+          <button 
+            onClick={() => handlePageChange((currentPage || 0) + 1)}
+            disabled={(currentPage !== undefined && totalPages !== undefined) ? currentPage >= totalPages - 1 : true}
+            className={`px-2 py-1 rounded ${(currentPage !== undefined && totalPages !== undefined) && currentPage < totalPages - 1 ? 'text-blue-600 hover:bg-blue-50' : 'text-gray-400 cursor-not-allowed'}`}
+          >
+            Next →
+          </button>
+        </div>
+        <div className="text-sm text-gray-600">
+          <span className="font-medium">Total:</span> {totalElements} flights
+        </div>
+      </div>
       <div>
         {isLoading ? (
           <div className="text-center py-8">

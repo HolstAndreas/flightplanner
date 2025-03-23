@@ -16,6 +16,7 @@ interface FlightFilters {
   maxPrice?: string;
   sortColumn?: string;
   sortDirection?: string;
+  page?: number;
 }
 
 export const fetchFlights = async (filters?: FlightFilters): Promise<FlightResponse> => {
