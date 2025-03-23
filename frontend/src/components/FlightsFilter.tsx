@@ -1,23 +1,26 @@
 import React, { FormEvent, useEffect, useState } from 'react'
-import { Airport } from '../types';
+import { Airport, SeatRecommendationParameters } from '../types';
 import { fetchLocations } from '../service/flight-service';
 import SelectElement from './ui/SelectElement';
 import { DateRange, DayPicker } from 'react-day-picker';
 import "react-day-picker/style.css";
 import SliderElement from './ui/SliderElement';
 import SortingElement from './ui/SortingElement';
+import CheckboxElement from './ui/CheckboxElement';
 
 interface FlightsFilterProps {
   children?: React.ReactNode;
   onFiltersChange: (filters: Record<string, any>) => void;
+  seatPreferences: SeatRecommendationParameters;
+  onRecommendationsChange: (seatPreferences: SeatRecommendationParameters) => void;
 }
 
-const FlightsFilter = ({ children, onFiltersChange }: FlightsFilterProps) => {
+const FlightsFilter = ({ onFiltersChange, onRecommendationsChange, seatPreferences }: FlightsFilterProps) => {
   const [cities, setCities] = useState<string[]>();
   const [countries, setCountries] = useState<string[]>();
   const [airports, setAirports] = useState<Airport[]>();
   const [selectedDateRange, setSelectedDateRange] = useState<DateRange | undefined>();
-  const [currentSort, setCurrentSort] = useState('departureTime_ASC')
+  const [currentSort, setCurrentSort] = useState('departureTime_ASC');
   const [filters, setFilters] = useState({
     departureAirport: '',
     departureCity: '',
@@ -64,6 +67,43 @@ const FlightsFilter = ({ children, onFiltersChange }: FlightsFilterProps) => {
 
   const handleSortChange = (sortBy: string) => {
     setCurrentSort(sortBy);
+  }
+
+  const handleCheckboxChange = (name: string, checked: boolean) => {
+    const updatedPreferences = { ...seatPreferences };
+
+    switch (name) {
+      case 'hasWindow':
+        updatedPreferences.hasWindow = checked;
+        break;
+      case 'hasLegspace':
+        updatedPreferences.hasLegspace = checked;
+        break;
+      case 'hasExit':
+        updatedPreferences.hasExit = checked;
+        break;
+    }
+    onRecommendationsChange(updatedPreferences);
+  }
+
+  const handlePassangerChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
+    const value = parseInt(e.target.value, 10);
+
+    const updatedPreferences = { 
+      ...seatPreferences,
+      seatsAmount: value
+    };
+    onRecommendationsChange(updatedPreferences);
+  }
+
+  const handleClassChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
+    const value = e.target.value;
+
+    const updatedPreferences = {
+      ...seatPreferences,
+      travelClass: value
+    };
+    onRecommendationsChange(updatedPreferences);
   }
 
   const handleSubmit = (e: FormEvent) => {
@@ -228,7 +268,8 @@ const FlightsFilter = ({ children, onFiltersChange }: FlightsFilterProps) => {
             </div>
           </div>
 
-          <div className="flex mt-4 gap-2">
+          <div className="flex flex-wrap">
+          <div className="flex mt-4 gap-2 mr-50">
             <button
               type="submit"
               className="px-4 py-2 bg-blue-500 hover:bg-blue-600 text-white rounded shadow-sm"
@@ -242,6 +283,49 @@ const FlightsFilter = ({ children, onFiltersChange }: FlightsFilterProps) => {
             >
               Clear
             </button>
+          </div>
+
+          <div className="flex flex-row gap-10 items-center">
+            <h3 className="font-semibold text-lg pb-1">Seat recommendations</h3>
+          <div>
+            <CheckboxElement
+              label="Window Seat"
+              name="hasWindow"
+              checked={seatPreferences.hasWindow}
+              onChange={(name, checked) => handleCheckboxChange(name, checked)}
+            />
+            <CheckboxElement
+              label="More legroom"
+              name="hasLegspace"
+              checked={seatPreferences.hasLegspace}
+              onChange={(name, checked) => handleCheckboxChange(name, checked)}
+            />
+            <CheckboxElement
+              label="Close to exit"
+              name="hasExit"
+              checked={seatPreferences.hasExit}
+              onChange={(name, checked) => handleCheckboxChange(name, checked)}
+            />
+            </div>
+            <div>
+              <SelectElement
+                label="Passengers"
+                name="seatsAmount"
+                value={seatPreferences.seatsAmount.toString() || "1"}
+                options={["1", "2", "3"]}
+                onChange={handlePassangerChange}
+              />
+            </div>
+            <div>
+              <SelectElement
+                label="Travel Class"
+                name="travelClass"
+                value={seatPreferences.travelClass || "TOURIST"}
+                options={["TOURIST", "BUSINESS", "FIRST"]}
+                onChange={handleClassChange}
+              />
+            </div>
+          </div>
           </div>
         </div>
       </form>
