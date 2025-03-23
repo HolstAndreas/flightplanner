@@ -292,7 +292,7 @@ const FlightsFilter = ({ onFiltersChange, onRecommendationsChange, seatPreferenc
                 label="Passengers"
                 name="seatsAmount"
                 value={seatPreferences.seatsAmount.toString() || "1"}
-                options={["1", "2", "3"]}
+                options={["1", "2"]}
                 onChange={handlePassangerChange}
               />
             </div>

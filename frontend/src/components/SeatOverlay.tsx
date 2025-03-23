@@ -87,6 +87,9 @@ const SeatOverlay = ({ seats, isOpen, onClose, parameters}: SeatOverlayProps) =>
       if (!seat.taken && parameters) {
         let score = 0;
         if (parameters.travelClass && seat.travelClass !== parameters.travelClass) return;
+        if (parameters.hasWindow && !seat.hasWindow) return;
+        if (parameters.hasLegspace && !seat.hasLegSpace) return;
+        if (parameters.hasExit && !seat.hasExit) return;
 
         if (parameters.hasWindow && seat.hasWindow) {
           score += 2;
@@ -113,12 +116,34 @@ const SeatOverlay = ({ seats, isOpen, onClose, parameters}: SeatOverlayProps) =>
 
     if (Object.keys(newScoring).length > 0 && parameters) {
       const sortedSeats = Object.entries(newScoring)
-        .sort(([, scoreA], [, scoreB]) => scoreB - scoreA)
-        .slice(0, parameters?.seatsAmount);
+        .sort(([, scoreA], [, scoreB]) => scoreB - scoreA);
 
-      const recommendedSeatIds = sortedSeats.map(([seatId]) => parseInt(seatId));
-      setSelectedSeats(seats.filter(seat => recommendedSeatIds.includes(seat.seatId)));
-      console.log(selectedSeats)
+        const recommendedSeatIds: number[] = [];
+        const seatsToRecommend = parameters.seatsAmount;
+  
+        for (let i = 0; i < sortedSeats.length; i++) {
+          const [seatId, ] = sortedSeats[i];
+          const seat = seats.find(s => s.seatId === parseInt(seatId));
+  
+          if (seat && !recommendedSeatIds.includes(seat.seatId)) {
+            const adjacentSeats = seats.filter(s =>
+              !s.taken &&
+              s.seatRow === seat.seatRow &&
+              Math.abs(s.seatId - seat.seatId) === 1 &&
+              !recommendedSeatIds.includes(s.seatId)
+            );
+  
+            if (adjacentSeats.length >= seatsToRecommend - 1) {
+              recommendedSeatIds.push(seat.seatId);
+              adjacentSeats.slice(0, seatsToRecommend - 1).forEach(adjSeat => {
+                recommendedSeatIds.push(adjSeat.seatId);
+              });
+              break;
+            }
+          }
+        }
+  
+        setSelectedSeats(seats.filter(seat => recommendedSeatIds.includes(seat.seatId)));
     } else {
       setSelectedSeats([])
     }
