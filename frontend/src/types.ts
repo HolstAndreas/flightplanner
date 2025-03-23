@@ -34,3 +34,14 @@ export type LocationResponse = {
   countries: string[],
   airports: Airport[],
 }
+
+export type SeatsResponse = {
+  seatRow: number,
+  seatColumn: string,
+  travelClass: string,
+  hasWindow: boolean,
+  hasLegspace: boolean,
+  hasExit: boolean,
+  isTaken: boolean,
+  price: number,
+}
