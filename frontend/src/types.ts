@@ -36,12 +36,21 @@ export type LocationResponse = {
 }
 
 export type SeatsResponse = {
+  seatId: number,
   seatRow: number,
   seatColumn: string,
   travelClass: string,
   hasWindow: boolean,
+  hasLegSpace: boolean,
+  hasExit: boolean,
+  taken: boolean,
+  price: number,
+}
+
+export type SeatRecommendationParameters = {
+  seatsAmount: number,
+  hasWindow: boolean,
   hasLegspace: boolean,
   hasExit: boolean,
-  isTaken: boolean,
-  price: number,
+  travelClass?: string
 }
