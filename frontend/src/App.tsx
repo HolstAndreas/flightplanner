@@ -31,7 +31,7 @@ const App = () => {
         >
         </FilteringSection>
       </div>
-      <div className="mb-8 mx-8 flex-1 bg-green-100 p-4 shadow-md">
+      <div className="mb-8 mx-4 flex-1 bg-green-100 p-4 shadow-md">
         <FlightSection 
           filters={filters}
           seatParameters={seatPreferences}
